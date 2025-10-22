@@ -67,8 +67,6 @@ public interface StackADT<E> {
 	 * @return {@code true} if stack is empty,
 	 * 			{@code false} if stack still has elements.
 	 * 
-	 * @throws UnsupportedOperationException if {@code empty} is not supported by this stack
-	 * @throws ClassCastException if the "element" is an inappropriate type for this stack
 	 */
 	E empty();
 	
@@ -78,7 +76,6 @@ public interface StackADT<E> {
 	 * @return the element on the top of the stack.
 	 * 			{@code null} if there are no elements to remove.
 	 * 
-	 * @throws UnsupportedOperationException if {@code peek} is not supported by this stack
 	 * @throws ClassCastException if the "element" is an inappropriate type for this stack
 	 */
 	E peek();
