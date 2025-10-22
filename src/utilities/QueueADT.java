@@ -1,5 +1,14 @@
 package utilities;
 
-public class QueueADT {
+/**
+ * QueueADT.java
+ * <p>
+ * 
+ * @author 
+ * @version 
+ * 
+ * 
+ */
+public interface QueueADT {
 
 }
