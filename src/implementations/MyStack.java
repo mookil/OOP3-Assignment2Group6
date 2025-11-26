@@ -7,6 +7,13 @@ import java.util.NoSuchElementException;
 
 public class MyStack<E> implements StackADT<E> {
 	private MyArrayList<E> arr;
+	
+	/**
+	 * Constructor initializes the underlying ArrayList.
+	 */
+	public MyStack() {
+		this.arr = new MyArrayList<>();
+	}
 
 	@Override
 	public void push(E element) {
