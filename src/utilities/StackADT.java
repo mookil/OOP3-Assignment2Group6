@@ -68,7 +68,7 @@ public interface StackADT<E> {
 	 * 			{@code false} if stack still has elements.
 	 * 
 	 */
-	E empty();
+	 boolean isEmpty();
 	
 	/**
 	 * Retrieve the top-most element without removing it from the stack.
@@ -79,6 +79,23 @@ public interface StackADT<E> {
 	 * @throws ClassCastException if the "element" is an inappropriate type for this stack
 	 */
 	E peek();
+	
+	int size();
+	
+	void clear();
+	
+	boolean contains(E element);
+	
+	Iterator<E> iterator();
+	
+	int search(E element);
+	
+	E[] toArray(E[] array);
+	
+	E[] toArray();
+	
+	boolean stackOverflow();
+	
 	
 
 }

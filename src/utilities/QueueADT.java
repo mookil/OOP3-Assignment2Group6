@@ -42,10 +42,30 @@ public interface QueueADT<E>{
 	 */
 	public E dequeue();
 	
+	public E dequeueAll();
+	
+	public E peek();
+	
+	public int size();
+	
+	public E[] toArray(E[] array);
+	
+	E[] toArray();
+	
+	public boolean isFull();
+	
+	public boolean contains(E item);
+	
+	public int search(E item);
+	
+	
+	
 	/**
 	 * If the queue is null then it returns a boolean value of True
 	 * 
 	 * @return A boolean value depending on if the queue is null or not
 	 */
 	public boolean isEmpty();
+	
+	public Iterator<E> iterator();
 }
