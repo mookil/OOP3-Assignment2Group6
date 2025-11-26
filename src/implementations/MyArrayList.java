@@ -3,6 +3,7 @@ package implementations;
 import java.util.ArrayList;
 import utilities.Iterator;
 import utilities.ListADT;
+import java.util.NoSuchElementException;
 
 /**
  * MyArrayList.java
@@ -20,7 +21,7 @@ import utilities.ListADT;
  * 
  * 
  */
-public class MyArrayList<E> implements ListADT<E> {
+public class MyArrayList<E> implements ListADT<E>{
 	
 	/**
 	 * This is the object array that will be used for this ADT.
@@ -82,8 +83,9 @@ public class MyArrayList<E> implements ListADT<E> {
 	 */
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+	
+		this.list = new Object[DEFAULT_SIZE];
+		this.size = 0;
 	}
 
 	
@@ -92,8 +94,30 @@ public class MyArrayList<E> implements ListADT<E> {
 	 */
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
+		
+		if (index < size && index >= 0)
+		{
+			Object[] newList = new Object[size + 1];
+			for (int i = 0; i < index; i++)
+			{
+				newList[i] = list[i];				
+			}
+			
+			newList[index] = toAdd;
+			
+			for (int i = index; i < size + 1; i++)
+			{
+				newList[i + 1] = list[i];
+			}
+			
+			list = newList;
+			this.size = size+1;
+			return true;
+		}
+		else
+		{
 		return false;
+		}
 	}
 
 	/**
@@ -101,8 +125,25 @@ public class MyArrayList<E> implements ListADT<E> {
 	 */
 	@Override
 	public boolean add(E toAdd) throws NullPointerException {
-		// TODO Auto-generated method stub
+		
+		if (toAdd != null)
+		{
+			Object[] newList = new Object[size + 1];
+			
+			for (int i = 0; i <= size; i++)
+			{
+				newList[i] = list[i];
+			}
+			
+			newList[size+1] = toAdd;
+			list = newList;
+			size = size + 1;
+			return true;
+		}
+		
+		else {
 		return false;
+		}
 	}
 
 	/**
@@ -110,8 +151,27 @@ public class MyArrayList<E> implements ListADT<E> {
 	 */
 	@Override
 	public boolean addAll(ListADT<? extends E> toAdd) throws NullPointerException {
-		// TODO Auto-generated method stub
+		
+		if (toAdd != null)
+		{
+			Object[] newList = new Object[size + toAdd.size()];
+			
+			for (int i = 0; i <= size; i++)
+			{
+				newList[i] = list[i];
+			}
+			
+			for (int i = 1; i <= toAdd.size() + 1; i++)
+			{
+				newList[size + i] = toAdd.get(i-1);
+			}
+			list = newList;
+			size = size + toAdd.size();
+			return true;
+		}
+		else {
 		return false;
+		}
 	}
 
 	/**
@@ -225,8 +285,18 @@ public class MyArrayList<E> implements ListADT<E> {
 	 */
 	@Override
 	public E set(int index, E toChange) throws NullPointerException, IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
+		
+		if (index <= size && index >= 0 && toChange != null)
+		{
+			E element = (E) list[index];
+			list[index] = toChange;
+			return element;
+		}
+		
+		else
+		{
 		return null;
+		}
 	}
 
 	/**
@@ -249,8 +319,23 @@ public class MyArrayList<E> implements ListADT<E> {
 	 */
 	@Override
 	public boolean contains(E toFind) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return false;
+		
+		try
+		{
+			for (int i = 0; i <= size; i++)
+			{
+				if (list[i] == toFind)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		catch (NullPointerException err)
+		{
+			return false;
+		}
+
 	}
 
 	/**
@@ -278,8 +363,38 @@ public class MyArrayList<E> implements ListADT<E> {
 	 */
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		class ListIterator<E> implements Iterator<E>
+		{
+			int position = 0;
+			
+			@Override
+			public boolean hasNext()
+			{
+				if (position < size)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			
+			@Override
+			public E next()
+			{
+				if (this.hasNext())
+				{
+					position++;
+					return (E) list[position - 1];
+				}
+				else
+				{
+					throw new NoSuchElementException("No Next Value");
+				}
+			}
+		}
+		return new ListIterator<E>();
 	}
 
 }
