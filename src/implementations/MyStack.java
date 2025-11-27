@@ -98,6 +98,7 @@ public class MyStack<E> implements StackADT<E> {
 		return arr.toArray(array);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public E[] toArray() {
 		return (E[]) arr.toArray();

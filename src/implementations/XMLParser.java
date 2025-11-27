@@ -148,8 +148,9 @@ public class XMLParser {
 	
 	/**
 	 * Prints all errors found during parsing.
+	 * @throws EmptyQueueException 
 	 */
-	public void printErrors() {
+	public void printErrors() throws EmptyQueueException {
 		if (errorQueue.isEmpty()) {
 			System.out.println("No errors found. XML is valid.");
 			return;
@@ -169,8 +170,9 @@ public class XMLParser {
 	 * Main method to test the XML parser.
 	 * 
 	 * @param args command line arguments (expects XML file path)
+	 * @throws EmptyQueueException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws EmptyQueueException {
 		if (args.length == 0) {
 			
 			// Test with sample files

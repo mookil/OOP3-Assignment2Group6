@@ -1,9 +1,9 @@
 package implementations;
 
-import java.util.ArrayList;
 import utilities.Iterator;
 import utilities.ListADT;
 import java.util.NoSuchElementException;
+import java.util.Arrays; // This is only for the toArray and resizing methods
 
 /**
  * MyArrayList.java
@@ -27,7 +27,7 @@ public class MyArrayList<E> implements ListADT<E>{
 	 * This is the object array that will be used for this ADT.
 	 * All items/nodes will be stored here.
 	 */
-	private Object[] list;
+	private E[] list;
 	
 	/**
 	 * This is the default size of the array that will be initialized in the constructor.
@@ -48,8 +48,9 @@ public class MyArrayList<E> implements ListADT<E>{
 	 * @author Mikael Ly
 	 * @date 11/5/2025
 	 */
+	@SuppressWarnings("unchecked")
 	public MyArrayList() {
-		this.list = new Object[DEFAULT_SIZE];
+		this.list = (E[]) new Object[DEFAULT_SIZE];
 		this.size = 0;
 	}
 	
@@ -63,72 +64,99 @@ public class MyArrayList<E> implements ListADT<E>{
 	 * 
 	 * @param size = size of the array you want to make
 	 */
+	@SuppressWarnings("unchecked")
 	public MyArrayList(int size) {
-		this.list = new Object[size];
+		this.list = (E[]) new Object[size];
 		this.size = 0;
 	}
 
 	
 	/**
-	 * 
+	 * @return the count of items within this list..
 	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void clear() {
 	
-		this.list = new Object[DEFAULT_SIZE];
+		this.list = (E[]) new Object[DEFAULT_SIZE];
 		this.size = 0;
 	}
 
 	
 	/**
+	 * Add an element at a given index.
+	 * 
+	 * @param index = index to add element at
+	 * @param toAdd - element to add
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
+		// if the element to be added is null
+		if (toAdd == null) { throw new NullPointerException("Element to be added cannot be null."); }
 		
-		if (index < size && index >= 0)
-		{
-			Object[] newList = new Object[size + 1];
-			for (int i = 0; i < index; i++)
-			{
-				newList[i] = list[i];				
-			}
-			
-			newList[index] = toAdd;
-			
-			for (int i = index; i < size + 1; i++)
-			{
-				newList[i + 1] = list[i];
-			}
-			
+		// if the index is out of bounds
+		if (index < 0 || index > size) { throw new IndexOutOfBoundsException("Index must be in between 0 and " + size + "."); }
+		
+		// If resizing is required: create a new bigger array with doubled size and copy the array over
+		if (size == list.length) {
+			E[] newList = (E[]) new Object[list.length * 2];
+			System.arraycopy(list, 0, newList, 0, size);
 			list = newList;
-			this.size = size+1;
-			return true;
 		}
-		else
-		{
-		return false;
-		}
+		
+		// Shift over the array to the right by 1 at index to accomodate the insertion
+		System.arraycopy(list, index, list, index + 1, size - index);
+		list[index] = toAdd; // add the element to the new list
+		size++; // increment size by 1
+		
+		return true;
+		
+		
+//		if (index < size && index >= 0)
+//		{
+//			E[] newList = (E[]) new Object[size + 1];
+//			for (int i = 0; i < index; i++)
+//			{
+//				newList[i] = list[i];				
+//			}
+//			
+//			newList[index] = toAdd;
+//			
+//			for (int i = index; i < size + 1; i++)
+//			{
+//				newList[i + 1] = list[i];
+//			}
+//			
+//			list = newList;
+//			this.size = size+1;
+//			return true;
+//		}
+//		else
+//		{
+//		return false;
+//		}
 	}
 
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean add(E toAdd) throws NullPointerException {
 		
 		if (toAdd != null)
 		{
-			Object[] newList = new Object[size + 1];
+			E[] newList = (E[]) new Object[size + 1];
 			
 			for (int i = 0; i <= size; i++)
 			{
@@ -149,12 +177,13 @@ public class MyArrayList<E> implements ListADT<E>{
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean addAll(ListADT<? extends E> toAdd) throws NullPointerException {
 		
 		if (toAdd != null)
 		{
-			Object[] newList = new Object[size + toAdd.size()];
+			E[] newList = (E[]) new Object[size + toAdd.size()];
 			
 			for (int i = 0; i <= size; i++)
 			{
@@ -185,7 +214,6 @@ public class MyArrayList<E> implements ListADT<E>{
 	 * @return data of the item at the given index
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public E get(int index) throws IndexOutOfBoundsException {
 		// TODO Implement get method
 		
@@ -315,45 +343,64 @@ public class MyArrayList<E> implements ListADT<E>{
 	}
 
 	/**
+	 * Searches the list for a given element.
 	 * 
+	 * @return true if found, false if not.
+	 * @param toFind - the element to search for in the list
+	 * @throws NullPointerException if toFind is null.
 	 */
 	@Override
 	public boolean contains(E toFind) throws NullPointerException {
+		if (toFind == null) { throw new NullPointerException("Element to find cannot be null."); }
 		
-		try
+		for (int i = 0; i <= size; i++)
 		{
-			for (int i = 0; i <= size; i++)
+			if (list[i].equals(toFind))
 			{
-				if (list[i] == toFind)
-				{
-					return true;
-				}
+				return true;
 			}
-			return false;
 		}
-		catch (NullPointerException err)
-		{
-			return false;
-		}
+		return false;
 
 	}
 
 	/**
-	 * @todo To be done by: Mikael
+	 * Copies the elments of this list into a given array.
+	 * If array is too small, a new array is created.
+	 * 
+	 * @param toHold - Array that these elements are to be stored
+	 * @return a typed array containing the elements of this ArrayList
+	 * @throws NullPointerException - if array is null
 	 */
 	@Override
 	public E[] toArray(E[] toHold) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return null;
+		// if array is null, throw NullPointerException
+		if (toHold == null) { throw new NullPointerException("Array cannot be null."); }
+		
+		// if array is less than size, increase the size of the given array to the size of this list.
+		if (toHold.length < size) {
+			toHold = Arrays.copyOf(toHold, size);
+		}
+		
+		// Copy elements over to the new array
+		System.arraycopy(list, 0, toHold, 0, size);
+		
+		// If the toHold array ends up bigger than this list, set the first unused slot to null.
+		if (toHold.length > size){
+			toHold[size] = null;
+		}
+		
+		// Return the array.
+		return toHold;
 	}
 
 	/**
-	 * @todo To be done by: Mikael
+	 * Return this array list as an Object[].
+	 * @return convertedArray
 	 */
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.copyOf(list, size);
 	}
 
 	/**
@@ -361,8 +408,10 @@ public class MyArrayList<E> implements ListADT<E>{
 	 * 
 	 * @return an Iterator<E> based off of this list
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Iterator<E> iterator() {
+		@SuppressWarnings("hiding")
 		class ListIterator<E> implements Iterator<E>
 		{
 			int position = 0;

@@ -104,6 +104,10 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Adds all items from another list.
+     * 
+     * @returns boolean if successful
+     * @param toAdd - the list to add items from
+     * @throws NullPointerException if toAdd is null
      */
     @Override
     public boolean addAll(ListADT<? extends E> toAdd)
@@ -112,8 +116,13 @@ public class MyDLL<E> implements ListADT<E> {
         if (toAdd == null)
             throw new NullPointerException("List is null.");
 
-        for (int i = 0; i < toAdd.size(); i++)
-            add(toAdd.get(i));
+//        for (int i = 0; i < toAdd.size(); i++)
+//            add(toAdd.get(i));
+        // utilize the iterator and while the toAdd array still has items, add them to this list
+        Iterator<? extends E> it = toAdd.iterator();
+        while (it.hasNext()) {
+        	this.add(it.next());
+        }
 
         return true;
     }
