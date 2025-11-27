@@ -242,7 +242,8 @@ public class MyDLL<E> implements ListADT<E> {
     /**
      * Convert to array (generic version)
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public E[] toArray(E[] toHold) throws NullPointerException {
 
         if (toHold == null)
