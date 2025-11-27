@@ -1,16 +1,22 @@
 package exceptions;
 
-/**
- * Exception class for test cases
- */
-public class EmptyQueueException extends Exception {
-	
-
+public class EmptyQueueException extends Exception
+{
 	/**
-	 * Exception Constructor Method
+	 *  Custom exception class for QueueADT implementations
 	 */
-	public EmptyQueueException(String errorMessage) {
-		super(errorMessage);
+	private static final long serialVersionUID = 682267963980463371L;
+
+	public EmptyQueueException()
+	{
+		super();
 	}
 
+	/**
+	 * @param message error message specific to cause of error.
+	 */
+	public EmptyQueueException( String message )
+	{
+		super( message );
+	}
 }

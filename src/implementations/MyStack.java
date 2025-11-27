@@ -109,4 +109,10 @@ public class MyStack<E> implements StackADT<E> {
 		return false; //My stack is always able to grow.
 	}
 
+	@Override
+	public boolean equals(StackADT<E> that) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

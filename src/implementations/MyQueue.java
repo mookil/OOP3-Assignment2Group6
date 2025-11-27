@@ -24,9 +24,8 @@ public class MyQueue<E> implements QueueADT<E> {
 	}
 
 	@Override
-	public E dequeueAll() {
+	public void dequeueAll() {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -76,6 +75,12 @@ public class MyQueue<E> implements QueueADT<E> {
 	public E[] toArray() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean equals(QueueADT<E> that) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
