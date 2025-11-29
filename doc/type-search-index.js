@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"utilities","l":"Iterator","k":"10"},{"p":"utilities","l":"ListADT","k":"10"},{"p":"utilities","l":"MyArrayList"},{"p":"utilities","l":"QueueADT","k":"10"},{"p":"utilities","l":"StackADT","k":"10"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"utilities","l":"QueueADT","k":"10"}];updateSearchResults();

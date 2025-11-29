@@ -16,10 +16,21 @@ import exceptions.EmptyQueueException;
  * @version 1.0
  */
 public class XMLParser {
-	
+	/**
+	 * stack of tags
+	 */
 	private MyStack<String> tagStack;
+	/**
+	 * queue of error statements
+	 */
 	private MyQueue<String> errorQueue;
+	/**
+	 * current line
+	 */
 	private int lineNumber;
+	/**
+	 * current file path
+	 */
 	private String currentFile;
 	
 	/**
@@ -148,7 +159,7 @@ public class XMLParser {
 	
 	/**
 	 * Prints all errors found during parsing.
-	 * @throws EmptyQueueException 
+	 * @throws EmptyQueueException if errorQueue is empty
 	 */
 	public void printErrors() throws EmptyQueueException {
 		if (errorQueue.isEmpty()) {
@@ -170,7 +181,7 @@ public class XMLParser {
 	 * Main method to test the XML parser.
 	 * 
 	 * @param args command line arguments (expects XML file path)
-	 * @throws EmptyQueueException 
+	 * @throws EmptyQueueException if errorQueue is empty
 	 */
 	public static void main(String[] args) throws EmptyQueueException {
 		if (args.length == 0) {

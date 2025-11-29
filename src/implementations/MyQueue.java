@@ -13,10 +13,12 @@ import exceptions.EmptyQueueException;
  * Stores all elements within a MyDLL Doubly Linked List method.
  * Automatically grows when capacity is reached.
  * @author Mikael Ly
- * @param <E>
+ * @param <E> element type
  */
 public class MyQueue<E> implements QueueADT<E> {
-	// DLL for storage method
+	/**
+	 * DLLADT for implementation type
+	 */
 	private MyDLL<E> list;
 	
 	
@@ -111,7 +113,7 @@ public class MyQueue<E> implements QueueADT<E> {
 	 * 
 	 * @param toFind - the element to be found
 	 * @return true if found, false if not
-	 * @throws NullPoitnerException if toFind is null
+	 * @throws NullPointerException if toFind is null
 	 */
 	@Override
 	public boolean contains(E toFind) throws NullPointerException {
