@@ -179,6 +179,9 @@ public class XMLParser {
 	
 	/**
 	 * Main method to test the XML parser.
+	 * If no arguments provide, parse the sample files.
+	 * If 1 argument provided, parse filepath file. (-fFileName.xml)
+	 * If else, print error.
 	 * 
 	 * @param args command line arguments (expects XML file path)
 	 * @throws EmptyQueueException if errorQueue is empty
@@ -199,14 +202,23 @@ public class XMLParser {
 			parser2.parseFile("res/sample2.xml");
 			parser2.printErrors();
 			
-		} else {
-			String filePath = args[0];
+		} else if (args.length == 1) {
+			String filePath = "";
+			// iterate through args (should only really have 1 arg)
+			for (int i = 0; i < args.length; i++) {
+				if (args[i].startsWith("-f")) {
+					filePath = args[i].substring(2);
+					
+				}
+			}
 			XMLParser parser = new XMLParser();
 			
 			System.out.println("Parsing: " + filePath);
 			parser.parseFile(filePath);
 			parser.printErrors();
 			
+		} else {
+			System.out.println("Error, unexpected number of arguments. Please only provide a filepath after -f.");
 		}
 	}
 }

@@ -5,7 +5,6 @@ import utilities.StackADT;
 import java.util.NoSuchElementException;
 import java.util.Arrays;
 import java.util.EmptyStackException;
-import java.lang.reflect.Array;
 
 /**
  * StackADT utilizing the MyArrayList resource.
