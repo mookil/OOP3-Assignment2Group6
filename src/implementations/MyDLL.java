@@ -9,12 +9,23 @@ import utilities.ListADT;
  *
  * Doubly Linked List implementation of the ListADT.
  * Uses MyDLLNode to store all items.
+ * 
+ * @author Anchal
  *
  */
 public class MyDLL<E> implements ListADT<E> {
 
+	/**
+	 * Head of the DLL.
+	 */
     private MyDLLNode<E> head;
+    /**
+     * Tail of the DLL.
+     */
     private MyDLLNode<E> tail;
+    /**
+     * Number of items in the list.
+     */
     private int size;
 
     /**
@@ -28,7 +39,7 @@ public class MyDLL<E> implements ListADT<E> {
     }
 
     /**
-     * Returns number of items in list.
+     * @return number of items in list.
      */
     @Override
     public int size() {
@@ -47,6 +58,12 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Adds an element at a specific index.
+     * 
+     * @param index - index to add at
+     * @param toAdd - element to add
+     * @return true if added
+     * @throws NullPointerException if toAdd is null
+     * @throws IndexOutOfBoundsException if index is below 0 or above list size
      */
     @Override
     public boolean add(int index, E toAdd)
@@ -94,6 +111,9 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Adds to the end of the list.
+     * 
+     * @param toAdd - element to add
+     * @return true if added
      */
     @Override
     public boolean add(E toAdd) throws NullPointerException {
@@ -129,6 +149,10 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Gets element at index.
+     * 
+     * @param index to get element at
+     * @return element at the index
+     * @throws IndexOutOfBoundsException if index is below 0 or above list size
      */
     @Override
     public E get(int index) throws IndexOutOfBoundsException {
@@ -137,6 +161,8 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Removes element at index.
+     * 
+     * @param index to remove at
      */
     @Override
     public E remove(int index) throws IndexOutOfBoundsException {
@@ -184,6 +210,11 @@ public class MyDLL<E> implements ListADT<E> {
         return null;
     }
 
+    /**
+     * Helper for remove(E toRemove).
+     * @param curr - current node
+     * @return node that was removed
+     */
     private E removeNode(MyDLLNode<E> curr) {
         E removed = curr.data;
 
@@ -206,6 +237,11 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Sets a value at a specific index.
+     * 
+     * @param index - index to set value at
+     * @param toChange - new element to change to
+     * @throws NullPointerException if toChange is null.
+     * @throws IndexOutOfBoundsException if index is below 0 or above list size.
      */
     @Override
     public E set(int index, E toChange)
@@ -222,7 +258,7 @@ public class MyDLL<E> implements ListADT<E> {
     }
 
     /**
-     * Returns true if empty.
+     * @return true if empty.
      */
     @Override
     public boolean isEmpty() {
@@ -231,6 +267,10 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Checks if element exists.
+     * 
+     * @param toFind - element to find
+     * @return true if found, false if not
+     * @throws NullPointerException if toFind is null.
      */
     @Override
     public boolean contains(E toFind) throws NullPointerException {
@@ -250,6 +290,10 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Convert to array (generic version)
+     * 
+     * @param array to store array at
+     * @return new converted array
+     * @throws NullPointerException if toHold is empty.
      */
     @SuppressWarnings("unchecked")
 	@Override
@@ -276,6 +320,7 @@ public class MyDLL<E> implements ListADT<E> {
 
     /**
      * Converts to an Object[].
+     * @return array converted to Object[]
      */
     @Override
     public Object[] toArray() {
@@ -318,7 +363,12 @@ public class MyDLL<E> implements ListADT<E> {
         };
     }
 
-    /** Helper: get node at index */
+    /** Helper: get node at index 
+     * 
+     * @param index - index to get element at
+     * @return DLLNode at index, null if not found
+     * @throws IndexOutOfBoundsException if index is below 0 or above list size
+     * */
     private MyDLLNode<E> getNode(int index) {
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException();

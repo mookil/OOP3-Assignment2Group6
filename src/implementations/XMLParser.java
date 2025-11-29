@@ -189,10 +189,11 @@ public class XMLParser {
 			parser2.printErrors();
 			
 		} else {
-			XMLParser parser = new XMLParser();
 			String filePath = args[0];
+			XMLParser parser = new XMLParser();
 			
 			System.out.println("Parsing: " + filePath);
+			parser.parseFile(filePath);
 			parser.printErrors();
 			
 		}
