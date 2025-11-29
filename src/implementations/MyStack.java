@@ -115,11 +115,27 @@ public class MyStack<E> implements StackADT<E> {
 	}
 
 	/**
-	 * Iterator method
+	 * Custom Iterator method for a Stack
 	 */
 	@Override
 	public Iterator<E> iterator() {
-		return arr.iterator();
+		class StackIterator implements Iterator<E> {
+			int index = arr.size() - 1;
+
+			@Override
+			public boolean hasNext() {
+				return index >= 0;
+			}
+
+			@Override
+			public E next() throws NoSuchElementException {
+				if (!hasNext()) {
+					throw new NoSuchElementException("No next value");
+				}
+				return arr.get(index--);
+			}
+		}
+		return new StackIterator();
 	}
 
 	/**

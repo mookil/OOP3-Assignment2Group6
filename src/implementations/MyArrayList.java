@@ -121,31 +121,6 @@ public class MyArrayList<E> implements ListADT<E>{
 		size++; // increment size by 1
 		
 		return true;
-		
-		
-//		if (index < size && index >= 0)
-//		{
-//			E[] newList = (E[]) new Object[size + 1];
-//			for (int i = 0; i < index; i++)
-//			{
-//				newList[i] = list[i];				
-//			}
-//			
-//			newList[index] = toAdd;
-//			
-//			for (int i = index; i < size + 1; i++)
-//			{
-//				newList[i + 1] = list[i];
-//			}
-//			
-//			list = newList;
-//			this.size = size+1;
-//			return true;
-//		}
-//		else
-//		{
-//		return false;
-//		}
 	}
 
 	/**
@@ -173,25 +148,6 @@ public class MyArrayList<E> implements ListADT<E>{
 		size++;
 		
 		return true;
-		
-//		if (toAdd != null)
-//		{
-//			E[] newList = (E[]) new Object[size + 1];
-//			
-//			for (int i = 0; i <= size; i++)
-//			{
-//				newList[i] = list[i];
-//			}
-//			
-//			newList[size+1] = toAdd;
-//			list = newList;
-//			size = size + 1;
-//			return true;
-//		}
-//		
-//		else {
-//		return false;
-//		}
 	}
 
 	/**
@@ -213,27 +169,6 @@ public class MyArrayList<E> implements ListADT<E>{
 		}
 		
 		return true;
-		
-//		if (toAdd != null)
-//		{
-//			E[] newList = (E[]) new Object[size + toAdd.size()];
-//			
-//			for (int i = 0; i <= size; i++)
-//			{
-//				newList[i] = list[i];
-//			}
-//			
-//			for (int i = 1; i <= toAdd.size() + 1; i++)
-//			{
-//				newList[size + i] = toAdd.get(i-1);
-//			}
-//			list = newList;
-//			size = size + toAdd.size();
-//			return true;
-//		}
-//		else {
-//		return false;
-//		}
 	}
 
 	/**
@@ -411,11 +346,13 @@ public class MyArrayList<E> implements ListADT<E>{
 		// iterate through list, 
 		while (it.hasNext())
 		{
-			if (it.equals(toFind))
+			E current = it.next();
+			if (current.equals(toFind))
 			{
 				return true;
 			}
 		}
+		
 		return false;
 
 	}
