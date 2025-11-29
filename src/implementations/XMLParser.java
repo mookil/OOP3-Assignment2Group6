@@ -32,6 +32,10 @@ public class XMLParser {
 	 * current file path
 	 */
 	private String currentFile;
+	/**
+	 * if this line is in CDATA
+	 */
+	private boolean inCdata = false;
 	
 	/**
 	 * Constructor initializes the stack and queue for parsing.
@@ -84,8 +88,29 @@ public class XMLParser {
 		int i = 0;
 		
 		while (i < line.length()) {
-			// Find the next tag
+			if (inCdata) {
+				int end = line.indexOf("]]>", i);
+				if (end == -1) { 
+					break; 
+				} else {
+					inCdata = false;
+					i = end + 3;
+					continue;
+				}
+			}
+			
+			// look for tag or CDATA start
+			int cdataStart = line.indexOf("<![CDATA[", i);
+			// find the next tag
 			int tagStart = line.indexOf('<', i);
+			
+			// if CDATA starts before next tag, enter CDATA mode
+			if (cdataStart != -1 && (tagStart == -1 || cdataStart < tagStart)) {
+				inCdata = true;
+				i = cdataStart + 9;
+				continue;
+			}
+			
 			
 			if (tagStart == -1) {
 				break; // No more tags in this line
@@ -111,18 +136,35 @@ public class XMLParser {
 	 * @param tag the tag content (without angle brackets)
 	 */
 	private void processTag(String tag) {		
+		String trimmed = tag.trim();
+		
+		// ignore processing instructions
+		if (trimmed.startsWith("?") && trimmed.endsWith("?")) {
+			return; // Self-closing tags don't need to be tracked
+		}
+		
+		// ignore comments
+		if (trimmed.startsWith("!--")) {
+			return;
+		}
+		
+		// ignore declarations
+		if (trimmed.startsWith("!")) {
+			return;
+		}
+		
 		// Check for self-closing tag
-		if (tag.endsWith("/")) {
+		if (trimmed.endsWith("/")) {
 			return; // Self-closing tags don't need to be tracked
 		}
 		
 		// Check for closing tag
-		if (tag.startsWith("/")) {
-			String closingTagName = extractTagName(tag.substring(1));
+		if (trimmed.startsWith("/")) {
+			String closingTagName = extractTagName(trimmed.substring(1));
 			handleClosingTag(closingTagName);
 		} else {
 			// Opening tag
-			String openingTagName = extractTagName(tag);
+			String openingTagName = extractTagName(trimmed);
 			tagStack.push(openingTagName);
 		}
 	}
@@ -154,7 +196,42 @@ public class XMLParser {
 			return;
 		}
 		
-		tagStack.pop();
+		// normal match
+		if (closingTagName.equals(tagStack.peek())) {
+			tagStack.pop();
+			return;
+		}
+		
+		// mismatch + resync
+		while (!tagStack.isEmpty() && !tagStack.peek().equals(closingTagName)) {
+			String expected = tagStack.pop();
+			errorQueue.enqueue("ERROR at line " + lineNumber
+					+ ": Mismtached closing tag </" 
+					+ closingTagName
+					+ ">, expected </"
+					+ expected 
+					+ ">.");
+		}
+		
+		// matching opener
+		if (!tagStack.isEmpty() && tagStack.peek().equals(closingTagName)) {
+			tagStack.pop();
+		} else {
+			errorQueue.enqueue("ERROR at line " + lineNumber
+					+ ": Closing tag </"
+					+ closingTagName
+					+ "> found with no matching opening tag.");
+		}
+		
+//		String lastOpened = tagStack.peek();
+//		if (!closingTagName.equals(lastOpened)) {
+//			errorQueue.enqueue("ERROR at line " + lineNumber + ": Mismatched closing tag </" 
+//					+ closingTagName + ">, expected </" + lastOpened + ">.");
+//			tagStack.pop();
+//			return;
+//		}
+//		
+//		tagStack.pop();
 	}
 	
 	/**
