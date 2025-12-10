@@ -12,6 +12,9 @@ import exceptions.EmptyQueueException;
  * It uses MyStack to track opening tags and ensure proper nesting,
  * and MyQueue to store and report errors found during parsing.
  * 
+ * Takes in an argument.
+ * java -jar XMLParser.jar -f<input.txt>
+ * 
  * @author Christopher Hanlon, Mikael Ly
  * @version 1.0
  */
